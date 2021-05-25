@@ -1,0 +1,45 @@
+body {
+  font-family: sans-serif;
+  background-color: #f0f0f0;
+}
+
+header {
+  background-color: purple;
+  color: white;
+  padding-top: 1rem;
+}
+
+header > h2 {
+  height: 2rem;
+}
+
+img {
+  width: 100%;
+  height: ;
+}
+
+button {
+  margin-top: 1rem;
+  position: relative;
+  left: 92%;
+  color: white;
+  background-color: purple;
+  height: 2rem;
+  width: 4rem;
+  border-radius: 5px;
+  justify-content: right;
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  button {
+    position: relative;
+    left: 87%;
+  }
+}
+
+textarea,
+input {
+  width: 100%;
+  border-radius: 5px;
+}
