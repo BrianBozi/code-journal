@@ -7,6 +7,17 @@ var data = {
   nextEntryId: 1
 };
 
+var oldPostingJSON = localStorage.getItem('javascript-local-storage');
+
+if (oldPostingJSON !== null) {
+  data = JSON.parse(oldPostingJSON);
+}
+
+window.addEventListener('beforeunload', function (event) {
+  var postingsJSON = JSON.stringify(data);
+  localStorage.setItem('javascript-local-storage', postingsJSON);
+});
+
 var $placeHolder = document.querySelector('img');
 var $newImage = document.querySelector('input[type="url"');
 var $newPost = document.querySelector('#new-post');
