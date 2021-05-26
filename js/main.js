@@ -53,6 +53,10 @@ function journalEntries(entry) {
   $h2.textContent = entry.title;
   $divColumnHalf2.append($h2);
 
+  var $editIcon = document.createElement('i');
+  $editIcon.setAttribute('class', 'far fa-edit');
+  $h2.append($editIcon);
+
   var $pElement = document.createElement('p');
   $pElement.textContent = entry.comment;
   $divColumnHalf2.append($pElement);

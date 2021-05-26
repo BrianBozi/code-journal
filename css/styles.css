@@ -36,6 +36,11 @@ header > h2 {
   height: 2rem;
 }
 
+i {
+  position: relative;
+  left: 60%;
+}
+
 img {
   width: 100%;
 }
