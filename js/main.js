@@ -62,7 +62,7 @@ function journalEntries(entry) {
 
 var $ul = document.querySelector('ul');
 
-window.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener('DOMContentLoaded', function (event) {
   for (var i = 0; i < data.entries.length; i++) {
     var renderPosts = journalEntries(data.entries[i]);
     $ul.append(renderPosts);
