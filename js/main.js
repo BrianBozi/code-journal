@@ -55,6 +55,7 @@ function journalEntries(entry) {
 
   var $editIcon = document.createElement('i');
   $editIcon.setAttribute('class', 'far fa-edit');
+  $editIcon.setAttribute('data-entry-id', entry.entryId);
   $h2.append($editIcon);
 
   var $pElement = document.createElement('p');
