@@ -12,18 +12,45 @@ $newImage.addEventListener('input', function (event) {
 $newPost.addEventListener('submit', function (event) {
   event.preventDefault();
 
-  var post = {
-    title: $newPost.postTitle.value,
-    image: $newPost.photoURL.value,
-    comment: $newPost.postComment.value,
-    entryId: data.nextEntryId
-  };
+  if (data.editing === null) {
 
-  data.nextEntryId++;
-  data.entries.push(post);
+    var post = {
+      title: $newPost.postTitle.value,
+      image: $newPost.photoURL.value,
+      comment: $newPost.postComment.value,
+      entryId: data.nextEntryId
+    };
 
-  $placeHolder.setAttribute('src', './images/placeholder-image-square.jpg');
-  journalEntries(post);
+    data.nextEntryId++;
+    data.entries.push(post);
+
+    $placeHolder.setAttribute('src', './images/placeholder-image-square.jpg');
+    journalEntries(post);
+
+  } else {
+    var $titleInput = document.querySelector('textarea[name="postTitle"]');
+
+    var $imageInput = document.querySelector('input[type="url"]');
+
+    var $imgSrc = document.querySelector('img');
+    $imgSrc.setAttribute('src', data.editing.image);
+    var $commentInput = document.querySelector('textarea[name="postComment"]');
+
+    data.editing.title = $titleInput.value;
+    data.editing.image = $imageInput.value;
+    data.editing.comment = $commentInput.value;
+
+    for (var x = 0; x < data.entries.length; x++) {
+      if (data.editing.entryId === data.entries[x].entryId) {
+
+        data.entries.splice(x, 1, data.editing);
+
+        updateDomEntries(data.entries);
+      }
+    }
+
+  }
+
   document.querySelector('form').reset();
 
 });
@@ -52,6 +79,11 @@ function journalEntries(entry) {
   var $h2 = document.createElement('h2');
   $h2.textContent = entry.title;
   $divColumnHalf2.append($h2);
+
+  var $editIcon = document.createElement('i');
+  $editIcon.setAttribute('class', 'far fa-edit');
+  $editIcon.setAttribute('data-entry-id', entry.entryId);
+  $h2.append($editIcon);
 
   var $pElement = document.createElement('p');
   $pElement.textContent = entry.comment;
@@ -83,3 +115,53 @@ $newPost.addEventListener('submit', function (event) {
   $entriesList.className = 'container-entries-list';
 
 });
+
+var $clickList = document.querySelector('ul');
+
+$clickList.addEventListener('click', function (event) {
+
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+  $entryForm.className = 'container-entry-form';
+  $entriesList.className = 'container-entries-list ' + 'hidden';
+
+  var entryId = event.target.getAttribute('data-entry-id');
+  entryId = parseInt(entryId);
+
+  for (var i = 0; i < data.entries.length; i++) {
+
+    if (data.entries[i].entryId === entryId) {
+
+      data.editing = data.entries[i];
+    }
+  }
+
+  var $titleInput = document.querySelector('textarea[name="postTitle"]');
+
+  var $imageInput = document.querySelector('input[type="url"]');
+
+  var $imgSrc = document.querySelector('img');
+  $imgSrc.setAttribute('src', data.editing.image);
+  var $commentInput = document.querySelector('textarea[name="postComment"]');
+
+  $titleInput.value = data.editing.title;
+
+  $imageInput.value = data.editing.image;
+  $commentInput.value = data.editing.comment;
+
+});
+
+function updateDomEntries(event) {
+
+  var $ul = document.querySelector('ul');
+
+  $ul.innerHTML = '';
+
+  for (var i = 0; i < data.entries.length; i++) {
+
+    var renderUpdatedEntires = journalEntries(data.entries[i]);
+    $ul.append(renderUpdatedEntires);
+
+  }
+}

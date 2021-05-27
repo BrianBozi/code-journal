@@ -36,6 +36,17 @@ header > h2 {
   height: 2rem;
 }
 
+h2 > i {
+  position: relative;
+  bottom: 1.5rem;
+  margin-left: 90%;
+}
+
+.column-half > p {
+  position: relative;
+  bottom: 2rem;
+}
+
 img {
   width: 100%;
 }
