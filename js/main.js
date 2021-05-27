@@ -13,7 +13,7 @@ $newPost.addEventListener('submit', function (event) {
   event.preventDefault();
 
   if (data.editing === null) {
-    //  handle submit
+
     var post = {
       title: $newPost.postTitle.value,
       image: $newPost.photoURL.value,
@@ -40,23 +40,15 @@ $newPost.addEventListener('submit', function (event) {
     data.editing.image = $imageInput.value;
     data.editing.comment = $commentInput.value;
 
-    //  handle edit
-    // data.editing;
-    // var entryId = event.target.getAttribute('data-entry-id');
-
     for (var x = 0; x < data.entries.length; x++) {
       if (data.editing.entryId === data.entries[x].entryId) {
 
         data.entries.splice(x, 1, data.editing);
-        //
+
+        updateDomEntries(data.entries);
       }
     }
-    journalEntries(data.editing);
-    data.editing = null;
-    // sorry Brett and Scott.. I had no choice
-    // this is the only i can do it until you guys
-    // see the code
-    location.reload();
+
   }
 
   document.querySelector('form').reset();
@@ -127,8 +119,6 @@ $newPost.addEventListener('submit', function (event) {
 var $clickList = document.querySelector('ul');
 
 $clickList.addEventListener('click', function (event) {
-  // console.log(event.target);
-  // console.log(event.target.tagName);
 
   if (event.target.tagName !== 'I') {
     return;
@@ -138,24 +128,17 @@ $clickList.addEventListener('click', function (event) {
 
   var entryId = event.target.getAttribute('data-entry-id');
   entryId = parseInt(entryId);
-  // data.editing = data.entries[entryId - 1];
-
-  // var entryIndex;
 
   for (var i = 0; i < data.entries.length; i++) {
 
     if (data.entries[i].entryId === entryId) {
-      // entryIndex = i;
+
       data.editing = data.entries[i];
     }
   }
 
-  // data.editing = data.entries[entryIndex];
-
-  // console.log('data-editing:', data.editing);
-
   var $titleInput = document.querySelector('textarea[name="postTitle"]');
-  // console.log('titleInput', $titleInput.value);
+
   var $imageInput = document.querySelector('input[type="url"]');
 
   var $imgSrc = document.querySelector('img');
@@ -163,16 +146,22 @@ $clickList.addEventListener('click', function (event) {
   var $commentInput = document.querySelector('textarea[name="postComment"]');
 
   $titleInput.value = data.editing.title;
-  // console.log('titleInput 2 ', $titleInput.value);
+
   $imageInput.value = data.editing.image;
   $commentInput.value = data.editing.comment;
 
-  // data.editing.title = $titleInput.value;
-  // console.log('dataEditing.title ', data.editing.title);
-  // data.editing.img = $imageInput.value;
-  // data.editing.comment = $commentInput.value;
-
-  // data.editing = null;
-
-//   console.log(data.editing);
 });
+
+function updateDomEntries(event) {
+
+  var $ul = document.querySelector('ul');
+
+  $ul.innerHTML = '';
+
+  for (var i = 0; i < data.entries.length; i++) {
+
+    var renderUpdatedEntires = journalEntries(data.entries[i]);
+    $ul.append(renderUpdatedEntires);
+
+  }
+}
