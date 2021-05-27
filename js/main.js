@@ -12,18 +12,53 @@ $newImage.addEventListener('input', function (event) {
 $newPost.addEventListener('submit', function (event) {
   event.preventDefault();
 
-  var post = {
-    title: $newPost.postTitle.value,
-    image: $newPost.photoURL.value,
-    comment: $newPost.postComment.value,
-    entryId: data.nextEntryId
-  };
+  if (data.editing === null) {
+    //  handle submit
+    var post = {
+      title: $newPost.postTitle.value,
+      image: $newPost.photoURL.value,
+      comment: $newPost.postComment.value,
+      entryId: data.nextEntryId
+    };
 
-  data.nextEntryId++;
-  data.entries.push(post);
+    data.nextEntryId++;
+    data.entries.push(post);
 
-  $placeHolder.setAttribute('src', './images/placeholder-image-square.jpg');
-  journalEntries(post);
+    $placeHolder.setAttribute('src', './images/placeholder-image-square.jpg');
+    journalEntries(post);
+
+  } else {
+    var $titleInput = document.querySelector('textarea[name="postTitle"]');
+
+    var $imageInput = document.querySelector('input[type="url"]');
+
+    var $imgSrc = document.querySelector('img');
+    $imgSrc.setAttribute('src', data.editing.image);
+    var $commentInput = document.querySelector('textarea[name="postComment"]');
+
+    data.editing.title = $titleInput.value;
+    data.editing.image = $imageInput.value;
+    data.editing.comment = $commentInput.value;
+
+    //  handle edit
+    // data.editing;
+    // var entryId = event.target.getAttribute('data-entry-id');
+
+    for (var x = 0; x < data.entries.length; x++) {
+      if (data.editing.entryId === data.entries[x].entryId) {
+
+        data.entries.splice(x, 1, data.editing);
+        //
+      }
+    }
+    journalEntries(data.editing);
+    data.editing = null;
+    // sorry Brett and Scott.. I had no choice
+    // this is the only i can do it until you guys
+    // see the code
+    location.reload();
+  }
+
   document.querySelector('form').reset();
 
 });
@@ -87,4 +122,57 @@ $newPost.addEventListener('submit', function (event) {
   $entryForm.className = 'container-entry-form ' + 'hidden';
   $entriesList.className = 'container-entries-list';
 
+});
+
+var $clickList = document.querySelector('ul');
+
+$clickList.addEventListener('click', function (event) {
+  // console.log(event.target);
+  // console.log(event.target.tagName);
+
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+  $entryForm.className = 'container-entry-form';
+  $entriesList.className = 'container-entries-list ' + 'hidden';
+
+  var entryId = event.target.getAttribute('data-entry-id');
+  entryId = parseInt(entryId);
+  // data.editing = data.entries[entryId - 1];
+
+  // var entryIndex;
+
+  for (var i = 0; i < data.entries.length; i++) {
+
+    if (data.entries[i].entryId === entryId) {
+      // entryIndex = i;
+      data.editing = data.entries[i];
+    }
+  }
+
+  // data.editing = data.entries[entryIndex];
+
+  // console.log('data-editing:', data.editing);
+
+  var $titleInput = document.querySelector('textarea[name="postTitle"]');
+  // console.log('titleInput', $titleInput.value);
+  var $imageInput = document.querySelector('input[type="url"]');
+
+  var $imgSrc = document.querySelector('img');
+  $imgSrc.setAttribute('src', data.editing.image);
+  var $commentInput = document.querySelector('textarea[name="postComment"]');
+
+  $titleInput.value = data.editing.title;
+  // console.log('titleInput 2 ', $titleInput.value);
+  $imageInput.value = data.editing.image;
+  $commentInput.value = data.editing.comment;
+
+  // data.editing.title = $titleInput.value;
+  // console.log('dataEditing.title ', data.editing.title);
+  // data.editing.img = $imageInput.value;
+  // data.editing.comment = $commentInput.value;
+
+  // data.editing = null;
+
+//   console.log(data.editing);
 });
