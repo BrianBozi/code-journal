@@ -15,12 +15,12 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
   <header>
     <nav class="container">
       <h2>Code Journal</h2>
       <h2 class="entries-btn"><a href="">Entries</a></h2>
     </nav>
-
   </header>
   <main>
     <div class="container" data-view="entry-form">
@@ -48,7 +48,12 @@
           <h2>Notes</h2>
           <textarea name="postComment" id="" cols="60" rows="10" required></textarea>
           <div class="row ">
+            <div class="column-half">
+              <h4 class="delete-entry"><a>Delete Entry</a></h4>
+            </div>
+            <div class="column-half">
               <button class="new-entry-btn">SAVE</button>
+            </div>
           </div>
         </div>
       </div>
@@ -70,9 +75,16 @@
       </div>
     </div>
     </div>
-
+    <div class="modal hidden">
+      <div class="modal-content">
+        <p>Are you sure you want to delete?</p>
+        <button class="modal-cancel">CANCEL</button>
+        <button class="modal-confirm">CONFIRM</button>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+
 </body>
 </html>

@@ -3,6 +3,48 @@ body {
   background-color: #f0f0f0;
 }
 
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  background-color: rgb(16 16 17 / 90%);
+}
+
+.modal-content {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  text-align: center;
+  height: 100px;
+  width: 300px;
+  position: absolute;
+  margin: auto;
+  bottom: 30rem;
+  left: 30%;
+  right: 30%;
+  padding-top: 0.5rem;
+}
+
+.modal-cancel {
+  margin-right: 80px;
+  color: black;
+  background-color: #b6b6b6;
+  border-radius: 5px;
+  padding: 5px 15px;
+  border: none;
+}
+
+.modal-confirm {
+  background-color: #dc2626;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 15px;
+  border: none;
+}
+
 header {
   background-color: #562b81;
   color: white;
@@ -51,10 +93,14 @@ img {
   width: 100%;
 }
 
+.delete-entry > a {
+  color: red;
+}
+
 .new-entry-btn {
   margin-top: 1rem;
   position: relative;
-  left: 92%;
+  left: 85%;
   color: white;
   background-color: #562b81;
   height: 2rem;
@@ -66,8 +112,7 @@ img {
 
 @media screen and (max-width: 768px) {
   .new-entry-btn {
-    position: relative;
-    left: 87%;
+    bottom: 70px;
   }
 }
 
