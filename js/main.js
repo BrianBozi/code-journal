@@ -22,10 +22,10 @@ $newPost.addEventListener('submit', function (event) {
     };
 
     data.nextEntryId++;
-    data.entries.push(post);
+    data.entries.unshift(post);
 
     $placeHolder.setAttribute('src', './images/placeholder-image-square.jpg');
-    journalEntries(post);
+    updateDomEntries(post);
 
   } else {
     var $titleInput = document.querySelector('textarea[name="postTitle"]');
@@ -53,12 +53,13 @@ $newPost.addEventListener('submit', function (event) {
 
   document.querySelector('form').reset();
 
+  $imgSrc.setAttribute('src', './images/placeholder-image-square.jpg');
 });
 
 function journalEntries(entry) {
-  var ul = document.querySelector('ul');
+  // var ul = document.querySelector('ul');
   var $li = document.createElement('li');
-  ul.append($li);
+  // ul.append($li);
 
   var $divRow = document.createElement('div');
   $divRow.setAttribute('class', 'row');
@@ -104,10 +105,14 @@ document.addEventListener('DOMContentLoaded', function (event) {
 var $newEntryBtn = document.querySelector('.create-new-entry-btn');
 var $entryForm = document.querySelector('.container-entry-form');
 var $entriesList = document.querySelector('.container-entries-list');
+// adding delete btn
+var $deleteEntrybtn = document.querySelector('.delete-entry');
 
 $newEntryBtn.addEventListener('click', function (event) {
   $entryForm.className = 'container-entry-form';
   $entriesList.className = 'container-entries-list ' + 'hidden';
+  // adding  so it can be hiden during new post
+  $deleteEntrybtn.className = 'delete-entry ' + 'hidden';
 });
 
 $newPost.addEventListener('submit', function (event) {
@@ -124,6 +129,8 @@ $clickList.addEventListener('click', function (event) {
     return;
   }
   $entryForm.className = 'container-entry-form';
+  // delete button shown
+  $deleteEntrybtn.className = 'delete-entry';
   $entriesList.className = 'container-entries-list ' + 'hidden';
 
   var entryId = event.target.getAttribute('data-entry-id');
@@ -159,9 +166,55 @@ function updateDomEntries(event) {
   $ul.innerHTML = '';
 
   for (var i = 0; i < data.entries.length; i++) {
-
+    // console.log('updatDomEntries', updateDomEntries);
     var renderUpdatedEntires = journalEntries(data.entries[i]);
     $ul.append(renderUpdatedEntires);
 
   }
 }
+
+var $modal = document.querySelector('.modal');
+var $cancelBtn = document.querySelector('.modal-cancel');
+var $confirmBtn = document.querySelector('.modal-confirm');
+
+// adding click event to delete Entry so we can show modal
+$deleteEntrybtn.addEventListener('click', function (event) {
+  $modal.className = '.modal';
+
+});
+// cancel turn off modal
+$cancelBtn.addEventListener('click', function (event) {
+  $modal.className = 'modal ' + 'hidden';
+  // data.editing = null;
+
+});
+
+// confirm delete
+$confirmBtn.addEventListener('click', function (event) {
+  // console.log('clicked confirm');
+  // console.log('the selected data', data.editing);
+
+  for (var x = 0; x < data.entries.length; x++) {
+    if (data.editing.entryId === data.entries[x].entryId) {
+
+      data.entries.splice(x, 1);
+
+      // updateDomEntries(data.entries);
+    }
+
+    // $modal.className = 'modal ' + 'hidden';
+    // $entryForm.className = 'container-entry-form ' + 'hidden';
+    // $entriesList.className = 'container-entries-list';
+
+  }
+  updateDomEntries(data.entries);
+  $modal.className = 'modal ' + 'hidden';
+  $entryForm.className = 'container-entry-form ' + 'hidden';
+  $entriesList.className = 'container-entries-list';
+
+  data.editing = null;
+  document.querySelector('form').reset();
+  var $imgSrc = document.querySelector('img');
+  $imgSrc.setAttribute('src', './images/placeholder-image-square.jpg');
+
+});

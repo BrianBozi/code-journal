@@ -3,6 +3,30 @@ body {
   background-color: #f0f0f0;
 }
 
+.modal {
+  width: 30rem;
+  position: relative;
+  text-align: center;
+  bottom: 1000px;
+  left: 15%;
+  line-height: 3rem;
+  box-shadow: 0 0 10000px 1000px rgb(16 16 17 / 90%);
+}
+
+.modal-content {
+  background-color: white;
+  box-shadow: 0 0 10000px 1000px rgb(16 16 17 / 90%);
+  color: red;
+  border-radius: 5px;
+  text-align: center;
+  height: 100px;
+  width: 300px;
+  position: relative;
+  bottom: 30rem;
+  left: 20rem;
+  padding-top: 0.5rem;
+}
+
 header {
   background-color: #562b81;
   color: white;
@@ -51,10 +75,15 @@ img {
   width: 100%;
 }
 
+.delete-entry > a {
+  color: red;
+}
+
 .new-entry-btn {
   margin-top: 1rem;
+  border: 1px solid red;
   position: relative;
-  left: 92%;
+  left: 40%;
   color: white;
   background-color: #562b81;
   height: 2rem;
@@ -64,12 +93,11 @@ img {
   margin-bottom: 2rem;
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .new-entry-btn {
-    position: relative;
-    left: 87%;
+
   }
-}
+} */
 
 textarea,
 input {
